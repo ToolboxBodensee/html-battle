@@ -17,9 +17,21 @@ var admin = null;
 
 // HELPR ---
 
-const sendSourceToBeamer = (id, sourceCode)=> {
+const clientUpdatedSourceCode = (id, sourceCode)=> {
     if (beamer && beamer.socket) {
         beamer.socket.emit('receive_upload', {id, sourceCode});
+    }
+    if (admin && admin.socket) {
+        admin.socket.emit('receive_upload', {id, sourceCode});
+    }
+};
+
+const clientDisconnected = (id)=> {
+    if (beamer && beamer.socket) {
+        beamer.socket.emit('client_disconnected', {id});
+    }
+    if (admin && admin.socket) {
+        admin.socket.emit('client_disconnected', {id});
     }
 };
 
@@ -32,7 +44,11 @@ io.on('connection', (socket)=> {
         socket.on('client_upload', (data)=> {
             console.log('client.upload', data.id, data.sourceCode.length);
             socket.sourceCode = data.sourceCode;
-            sendSourceToBeamer(data.id, data.sourceCode);
+            clientUpdatedSourceCode(data.id, data.sourceCode);
+        });
+        socket.on('disconnect', (data)=> {
+            console.log('client.disconnected', socket.id);
+            clientDisconnected(socket.id);
         });
     } else if (socket.type === 'beamer') {
         beamer = {socket, type: 'beamer'};
