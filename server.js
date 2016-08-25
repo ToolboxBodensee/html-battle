@@ -29,7 +29,7 @@ io.on('connection', (socket)=> {
         clients[id] = {socket, points: 0};
     }
 
-    socket.emit('receiveId', {id});
+    socket.emit('receive_id', {id});
 });
 
 // CLIENT -------------------------------
