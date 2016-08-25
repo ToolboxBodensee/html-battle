@@ -4,14 +4,14 @@
 
 const express = require('express');
 const app = express();
+const server = require('http').createServer(app);
+const socket = require('socket.io');
+const io = socket(server);
 
 app.use(express.static(__dirname + '/public'));
 
-// var Router = express.Router();
-// Router.get('/', function(req, res){
-//    res.html('public/client.html');
-// });
-//
-// app.use(Router);
+io.on('connection', ()=> {
+    console.log('connected');
+});
 
-app.listen(8080);
+server.listen(8080);
