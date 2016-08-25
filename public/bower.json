@@ -20,8 +20,23 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "^3.1.0",
+    "angular-bootstrap-material": "*",
+    "angular-clipboard": "^1.5.0",
+    "angular-local-storage": "^0.4.0",
+    "angular-socket-io": "^0.7.0",
+    "angular-translate": "^2.11.1",
+    "angular-uuid": "^0.1.0",
     "angular": "^1.5.8",
-    "bootstrap-material-design": "^4.0.2"
+    "arrive": "^2.3.1",
+    "bootstrap-material-design": "^4.0.2",
+    "components-font-awesome": "^4.6.3",
+    "font-awesome-animation": "^0.0.9",
+    "moment": "^2.14.1",
+    "ng-idle": "^1.2.2",
+    "snackbar": "^0.1.5",
+    "snackbarjs": "^1.1.0",
+    "socket.io-client": "^1.4.8",
+    "socket.io": "^1.4.8",
+    "underscore": "^1.8.3"
   }
 }
