@@ -59,43 +59,62 @@
 preview
 
 
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Radios</label>
 
-    <iframe ng-src="{{ sourceCode.preview }}" sandbox="allow-same-origin allow-scripts">
-
-    </iframe>
-
-HTML:
-    <div
-            class="ace-editor"
-            ui-ace="
-            {
-                useWrapMode: true,
-                showGutter:  true,
-                theme:       'chrome',
-                onChange:    sourceCodeChanged,
-            }"
-            ng-model="sourceCode.html"
-    >
-
-    </div>
-
-    css:
-
-    <div
-            class="ace-editor"
-            ui-ace="
-            {
-                useWrapMode: true,
-                showGutter:  true,
-                theme:       'chrome',
-                onChange:    sourceCodeChanged,
-            }"
-            ng-model="sourceCode.css"
-    >
-
+        <div class="col-lg-10">
+            <div class="radio radio-primary">
+                <label>
+                    <input type="radio" name="optionsRadios" checked="">
+                    Option one
+                </label>
+            </div>
+            <div class="radio radio-primary">
+                <label>
+                    <input type="radio" name="optionsRadios">
+                    Option two
+                </label>
+            </div>
+        </div>
     </div>
 
 
+        <div id="editor-body">
+            <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <h2>HTML</h2>
+                <div
+                    class="ace-editor"
+                    ui-ace="
+                    {
+                        useWrapMode: true,
+                        showGutter:  true,
+                        theme:       'chrome',
+                        onChange:    sourceCodeChanged,
+                    }"
+                    ng-model="sourceCode.html"
+                >
 
+                </div>
+                <h2>CSS</h2>
+                <div
+                    class="ace-editor"
+                    ui-ace="
+                    {
+                        useWrapMode: true,
+                        showGutter:  true,
+                        theme:       'chrome',
+                        onChange:    sourceCodeChanged,
+                    }"
+                    ng-model="sourceCode.css"
+                >
+
+                </div>
+            </div>
+            <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <iframe ng-src="{{ sourceCode.preview }}" sandbox="allow-same-origin allow-scripts">
+
+                </iframe>
+            </div>
+        </div>
     </body>
 </html>

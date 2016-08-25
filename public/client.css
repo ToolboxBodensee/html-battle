@@ -1,11 +1,6 @@
-*
-{
-
-
+#editor-body {
+  height: 200px;
 }
-
-
-.ace-editor
-{
-    height: 500px;
+.ace-editor {
+  height: 500px;
 }
