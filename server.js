@@ -14,42 +14,73 @@ const uuid = require('./lib/uuid');
 app.use(express.static(__dirname + '/public'));
 
 // DATA -------------------------------
-var clients = {};
+let clients = [];
+
+// HELPR ---
+const clientExists = (id)=> {
+    return _.find(clients, {id}) !== null;
+};
+
+const removeClient = (id)=> {
+    _.remove(clients, {id});
+};
+
+const addClient = (client)=> {
+    clients.push(client);
+};
 
 // GENERAL -------------------------------
 io.on('connection', (socket)=> {
-    console.log('connected');
+    console.log('connected', socket.id, socket.type);
+});
 
-    var id = null;
-    for (var tries = 5; tries > 0; tries--) {
-        id = uuid();
-        if (clients[id]) {
-            continue;
-        }
-        clients[id] = {socket, points: 0};
+io.use(function (socket, next) {
+    console.log('Query', socket.handshake.query);
+
+    const id = socket.handshake.query.id;
+    if (id === undefined || id === null || id === 'null' || id === 'undefined') {
+        return next(new Error('id is not defined'));
     }
 
-    socket.emit('receive_id', {id});
+    const type = socket.handshake.query.type;
+    if (type === undefined || type === null || type === 'null' || type === 'undefined') {
+        return next(new Error('type is not defined'));
+    }
+
+    if (clientExists(id)) {
+        removeClient(id);
+    }
+
+    addClient({socket, id, type, points: 0});
+
+    socket.id = id;
+    socket.type = type;
+
+    return next();
 });
+
+setInterval(()=> {
+    console.log(_.map(clients, 'id'));
+}, 1000);
 
 // CLIENT -------------------------------
-io.on('client.upload', (id)=> {
-    console.log('client.upload');
-});
-
-// ADMIN -------------------------------
-io.on('admin.setChallenge', ()=> {
-    console.log('admin.setChallenge');
-});
-
-io.on('admin.addPoints', (user, poinds)=> {
-    console.log('admin.addPoints');
-});
-
-io.on('admin.clearPoints', ()=> {
-    console.log('admin.clearPoints');
-});
+// socket.on('client.upload', (id)=> {
+//     console.log('client.upload');
+// });
+//
+// // ADMIN -------------------------------
+// socket.on('admin.setChallenge', ()=> {
+//     console.log('admin.setChallenge');
+// });
+//
+// socket.on('admin.addPoints', (user, poinds)=> {
+//     console.log('admin.addPoints');
+// });
+//
+// socket.on('admin.clearPoints', ()=> {
+//     console.log('admin.clearPoints');
+// });
 
 
 // RUN -------------------------------
-server.listen(8080);
+server.listen(8080, '192.168.3.223');
