@@ -59,6 +59,7 @@ io.on('connection', (socket)=> {
     if (socket.type === 'client') {
         socket.on('client_upload', (data)=> {
             console.log('client.upload', data.id, data.sourceCode.length);
+            updateSourceCodeOfClient(data.id, data.sourceCode);
             sendSourceToBeamer(data.id, data.sourceCode);
         });
     } else if (socket.type === 'beamer') {
