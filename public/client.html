@@ -28,6 +28,7 @@
         <script type="text/javascript" src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
         <script type="text/javascript" src="bower_components/angular-socket-io/socket.js"></script>
         <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
+        <script type="text/javascript" src="bower_components/angular-uuid/uuid.js"></script>
         <script type="text/javascript" src="bower_components/moment/moment.js"></script>
         <script type="text/javascript" src="bower_components/ng-idle/angular-idle.js"></script>
         <script type="text/javascript" src="bower_components/socket.io-client/socket.io.js"></script>
@@ -37,12 +38,37 @@
 
         <script type="text/javascript" src="clientApp.js"></script>
         <script type="text/javascript" src="clientAppController.js"></script>
+        <script type="text/javascript" src="clientIdProvider.js"></script>
         <script type="text/javascript" src="socket.js"></script>
 
 
 
     </head>
     <body>
-    hi
+
+
+    status: <span ng-if="connected">connected</span>  <span ng-if="!connected">not connected</span>
+
+<br>
+    id: <span>{{ clientId }}</span>
+
+
+HTML:
+        <textarea ng-model="htmlInput">
+
+
+
+        </textarea>
+CSS:
+        <textarea ng-model="cssInput">
+
+
+
+        </textarea>
+
+
+
+
+
     </body>
 </html>

@@ -6,18 +6,30 @@ app.controller('AppController', function (
     , $scope
     , $translate
     , BattleSocket
+    , ClientIdProvider
 )
 {
+    /**
+     * #################################################################################################################
+     * ### Properties                                                                                                ###
+     * #################################################################################################################
+     */
+
+    $scope.clientId  = null;
     $scope.connected = false;
 
 
 
 
 
+    /**
+     * #################################################################################################################
+     * ### Event listeners                                                                                           ###
+     * #################################################################################################################
+     */
 
     $scope.$on('socket:connect', function (event, data) {
         $log.log('BattleSocket: connect', event, data);
-
 
         $scope.connected = true;
     });
@@ -51,9 +63,42 @@ app.controller('AppController', function (
 
     });
 
+    $scope.$on('socket:receive_id', function (event, data) {
+        $log.log('BattleSocket: receive_id', event, data);
 
-    
-$log.log('Ready');
+        $scope.clientId = data['id'];
+
+        $log.log('BattleSocket: client id now:', $scope.clientId);
+    });
+
+    /**
+     * #################################################################################################################
+     * ### Public scope methods                                                                                      ###
+     * #################################################################################################################
+     */
+
+    $scope.getSourceCode = function ()
+    {
 
 
+
+    };
+
+    $scope.init = function ()
+    {
+        $log.log('AppController: ready');
+    };
+
+
+
+    // BattleSocket.upload
+
+
+    /**
+     * #################################################################################################################
+     * ### After initialization                                                                                      ###
+     * #################################################################################################################
+     */
+
+    $scope.init();
 });

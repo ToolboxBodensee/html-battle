@@ -1,6 +1,7 @@
 app.factory('BattleSocket', function (
       $log
     , socketFactory
+    , ClientIdProvider
 ) {
     $log.log('BattleSocket: initializing');
 
@@ -9,7 +10,7 @@ app.factory('BattleSocket', function (
 
     $log.log('BattleSocket: socket url', socketUrl);
 
-    var BattleSocketIO = io.connect(socketUrl, { secure: true });
+    var BattleSocketIO = io.connect(socketUrl, { secure: true, query: 'type=client&id=' + ClientIdProvider.getClientId() });
     var BattleSocket   = socketFactory({
         ioSocket: BattleSocketIO
     });
@@ -23,20 +24,15 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('reconnect_failed');
     BattleSocket.forward('reconnecting');
     BattleSocket.forward('unauthorized');
-    BattleSocket.forward('camigo.response.history');
+    BattleSocket.forward('receive_id');
 
-
-
-
-    BattleSocket.sendMessage = function (text, recipient, venueId)
+    BattleSocket.upload = function (clientId, sourceCode)
     {
-        $log.log('BattleSocket: sendMessage', text, recipient, venueId);
+        $log.log('BattleSocket: upload', clientId, sourceCode);
 
-        BattleSocketIO.emit('camigo.send.message', {
-            text:    text,
-            type:    'text',
-            user:    recipient,
-            venueId: venueId
+        BattleSocketIO.emit('client.upload', {
+            id:         clientId,
+            sourceCode: sourceCode
         });
     };
 
