@@ -97,9 +97,14 @@ io.use(function (socket, next) {
     return next();
 });
 
-// setInterval(()=> {
-//     console.log(_.map(clients, 'id'));
-// }, 1000 * 5);
+setInterval(()=> {
+    const grouped = _.chain(clients).groupBy('type').value();
+    const types = _.keys(grouped);
+    const zippedClients = _.zipObject(types, _.map(types, type=> {
+        return _.map(grouped[type], 'id');
+    }));
+    console.log(zippedClients);
+}, 1000 * 3);
 
 //
 // // ADMIN -------------------------------
