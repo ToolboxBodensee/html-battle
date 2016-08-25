@@ -17,11 +17,19 @@ app.use(express.static(__dirname + '/public'));
 let clients = [];
 
 // HELPR ---
-const clientExists = (id)=> {
-    return _.find(clients, {id}) !== null;
+const findBeamer = ()=> {
+    return _.find(clients, {type: 'beamer'});
 };
 
-const removeClient = (id)=> {
+const findClientById = (id)=> {
+    return _.find(clients, {id});
+};
+
+const clientExists = (id)=> {
+    return findClientById(id) !== null;
+};
+
+const removeClientWithId = (id)=> {
     _.remove(clients, {id});
 };
 
@@ -29,20 +37,37 @@ const addClient = (client)=> {
     clients.push(client);
 };
 
+const updateSourceCodeOfClient = (id, sourceCode)=> {
+    const foundClient = findClientById(id);
+    if (foundClient) {
+        foundClient.sourceCode = sourceCode;
+    }
+};
+
+const sendSourceToBeamer = (id, sourceCode)=> {
+    const foundBeamer = findBeamer(id);
+    if (foundBeamer) {
+        foundBeamer.socket.emit('receive_upload', {id, sourceCode});
+    }
+};
+
 // GENERAL -------------------------------
 io.on('connection', (socket)=> {
     console.log('connected', socket.id, socket.type);
 
-
     // CLIENT -------------------------------
-    socket.on('client_upload', (data)=> {
-        console.log('client.upload', data.id, data.sourceCode.length);
-    });
+    if (socket.type === 'client') {
+        socket.on('client_upload', (data)=> {
+            console.log('client.upload', data.id, data.sourceCode.length);
+            sendSourceToBeamer(data.id, data.sourceCode);
+        });
+    } else if (socket.type === 'beamer') {
 
+    }
 });
 
 io.use(function (socket, next) {
-    console.log('Query', socket.handshake.query);
+    // console.log('Query', socket.handshake.query);
 
     const id = socket.handshake.query.id;
     if (id === undefined || id === null || id === 'null' || id === 'undefined') {
@@ -55,10 +80,16 @@ io.use(function (socket, next) {
     }
 
     if (clientExists(id)) {
-        removeClient(id);
+        removeClientWithId(id);
     }
 
-    addClient({socket, id, type, points: 0});
+    addClient({
+        socket,
+        id,
+        type,
+        points: 0,
+        sourceCode: '<html></html>'
+    });
 
     socket.id = id;
     socket.type = type;
