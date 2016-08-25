@@ -12,40 +12,14 @@ const _ = require('lodash');
 app.use(express.static(__dirname + '/public'));
 
 // DATA -------------------------------
-let clients = [];
+var beamer = null;
+var admin = null;
 
 // HELPR ---
-const findBeamer = ()=> {
-    return _.find(clients, {type: 'beamer'});
-};
-
-const findClientById = (id)=> {
-    return _.find(clients, {id});
-};
-
-const clientExists = (id)=> {
-    return findClientById(id) !== null;
-};
-
-const removeClientWithId = (id)=> {
-    _.remove(clients, {id});
-};
-
-const addClient = (client)=> {
-    clients.push(client);
-};
-
-const updateSourceCodeOfClient = (id, sourceCode)=> {
-    const foundClient = findClientById(id);
-    if (foundClient) {
-        foundClient.sourceCode = sourceCode;
-    }
-};
 
 const sendSourceToBeamer = (id, sourceCode)=> {
-    const foundBeamer = findBeamer(id);
-    if (foundBeamer) {
-        foundBeamer.socket.emit('receive_upload', {id, sourceCode});
+    if (beamer && beamer.socket) {
+        beamer.socket.emit('receive_upload', {id, sourceCode});
     }
 };
 
@@ -57,17 +31,17 @@ io.on('connection', (socket)=> {
     if (socket.type === 'client') {
         socket.on('client_upload', (data)=> {
             console.log('client.upload', data.id, data.sourceCode.length);
-            updateSourceCodeOfClient(data.id, data.sourceCode);
+            socket.sourceCode = data.sourceCode;
             sendSourceToBeamer(data.id, data.sourceCode);
         });
     } else if (socket.type === 'beamer') {
-
+        beamer = {socket, type: 'beamer'};
+    } else if (socket.type === 'admin') {
+        admin = {socket, type: 'admin'};
     }
 });
 
 io.use(function (socket, next) {
-    // console.log('Query', socket.handshake.query);
-
     const id = socket.handshake.query.id;
     if (id === undefined || id === null || id === 'null' || id === 'undefined') {
         return next(new Error('id is not defined'));
@@ -78,34 +52,14 @@ io.use(function (socket, next) {
         return next(new Error('type is not defined'));
     }
 
-    if (clientExists(id)) {
-        removeClientWithId(id);
-    }
-
-    addClient({
-        socket,
-        id,
-        type,
-        points: 0,
-        sourceCode: '<html></html>'
-    });
-
     socket.id = id;
     socket.type = type;
+    socket.points = 0;
+    socket.sourceCode = '';
 
     return next();
 });
 
-setInterval(()=> {
-    const grouped = _.chain(clients).groupBy('type').value();
-    const types = _.keys(grouped);
-    const zippedClients = _.zipObject(types, _.map(types, type=> {
-        return _.map(grouped[type], 'id');
-    }));
-    console.log(zippedClients);
-}, 1000 * 3);
-
-//
 // // ADMIN -------------------------------
 // socket.on('admin.setChallenge', ()=> {
 //     console.log('admin.setChallenge');
