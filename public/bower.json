@@ -1,0 +1,27 @@
+{
+  "name": "Toolbox HTML Battle",
+  "homepage": "https://github.com/ToolboxBodensee/html-battle",
+  "authors": [
+    "Thomas Kekeisen <thomas.kekeisen@socialbit.de>"
+  ],
+  "description": "^ this",
+  "main": "client.html",
+  "keywords": [
+    "html",
+    "battle",
+    "toolbox"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "angular": "^1.5.8",
+    "bootstrap-material-design": "^4.0.2"
+  }
+}
