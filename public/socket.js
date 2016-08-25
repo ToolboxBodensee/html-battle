@@ -2,6 +2,7 @@ app.factory('BattleSocket', function (
       $log
     , socketFactory
     , ClientIdProvider
+    , TypeProvider
 ) {
     $log.log('BattleSocket: initializing');
 
@@ -10,7 +11,7 @@ app.factory('BattleSocket', function (
 
     $log.log('BattleSocket: socket url', socketUrl);
 
-    var BattleSocketIO = io.connect(socketUrl, { secure: true, query: 'type=client&id=' + ClientIdProvider.getClientId() });
+    var BattleSocketIO = io.connect(socketUrl, { secure: true, query: 'type=' + TypeProvider.getType() + '&id=' + ClientIdProvider.getClientId() });
     var BattleSocket   = socketFactory({
         ioSocket: BattleSocketIO
     });
@@ -24,6 +25,8 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('reconnect_failed');
     BattleSocket.forward('reconnecting');
     BattleSocket.forward('unauthorized');
+    BattleSocket.forward('receive_upload');
+
 
     BattleSocket.upload = function (clientId, sourceCode)
     {

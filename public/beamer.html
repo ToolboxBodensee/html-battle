@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ language }}" ng-app="toolboxHtmlBattleClient" ng-controller="AppController">
+<html lang="{{ language }}" ng-app="toolboxHtmlBattleBeamer" ng-controller="AppController">
     <head>
         <meta charset="UTF-8">
-        <title>Toolbox HTML Battle Client</title>
+        <title>Toolbox HTML Battle Beamer</title>
 
 
         <!-- External css -->
@@ -36,10 +36,12 @@
 
 
 
-        <script type="text/javascript" src="clientApp.js"></script>
-        <script type="text/javascript" src="clientAppController.js"></script>
+        <script type="text/javascript" src="beamerApp.js"></script>
+
+        <script type="text/javascript" src="beamerTypeProvider.js"></script>
+
+        <script type="text/javascript" src="beamerAppController.js"></script>
         <script type="text/javascript" src="clientIdProvider.js"></script>
-        <script type="text/javascript" src="clientTypeProvider.js"></script>
         <script type="text/javascript" src="socket.js"></script>
 
 
@@ -53,19 +55,19 @@
 <br>
     id: <span>{{ clientId }}</span>
 
+    <div id="source-codes">
 
-HTML:
-        <textarea ng-model="sourceCode.html">
+        <div ng-repeat="(remoteClientId, sourceCode) in sourceCodes">
+            <h2>{{ remoteClientId }}</h2>
+            <iframe ng-src="{{ sourceCode }}" sandbox="allow-same-origin allow-scripts">
 
-
-
-        </textarea>
-CSS:
-        <textarea ng-model="sourceCode.css">
-
+            </iframe>
+        </div>
 
 
-        </textarea>
+
+    </div>
+
 
 
 
