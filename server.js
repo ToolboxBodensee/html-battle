@@ -32,6 +32,13 @@ const addClient = (client)=> {
 // GENERAL -------------------------------
 io.on('connection', (socket)=> {
     console.log('connected', socket.id, socket.type);
+
+
+    // CLIENT -------------------------------
+    socket.on('client_upload', (data)=> {
+        console.log('client.upload', data.id, data.sourceCode.length);
+    });
+
 });
 
 io.use(function (socket, next) {
@@ -59,14 +66,10 @@ io.use(function (socket, next) {
     return next();
 });
 
-setInterval(()=> {
-    console.log(_.map(clients, 'id'));
-}, 1000);
+// setInterval(()=> {
+//     console.log(_.map(clients, 'id'));
+// }, 1000 * 5);
 
-// CLIENT -------------------------------
-// socket.on('client.upload', (id)=> {
-//     console.log('client.upload');
-// });
 //
 // // ADMIN -------------------------------
 // socket.on('admin.setChallenge', ()=> {
