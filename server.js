@@ -8,8 +8,6 @@ const socket = require('socket.io');
 const io = socket(server);
 const _ = require('lodash');
 
-const uuid = require('./lib/uuid');
-
 // MIDDLEWARE -------------------------------
 app.use(express.static(__dirname + '/public'));
 
