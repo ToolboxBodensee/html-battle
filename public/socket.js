@@ -24,13 +24,12 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('reconnect_failed');
     BattleSocket.forward('reconnecting');
     BattleSocket.forward('unauthorized');
-    BattleSocket.forward('receive_id');
 
     BattleSocket.upload = function (clientId, sourceCode)
     {
         $log.log('BattleSocket: upload', clientId, sourceCode);
 
-        BattleSocketIO.emit('client.upload', {
+        BattleSocketIO.emit('client_upload', {
             id:         clientId,
             sourceCode: sourceCode
         });

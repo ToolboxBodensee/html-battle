@@ -1,9 +1,11 @@
 /* global app */
 app.controller('AppController', function (
-    $controller
+      $controller
+    , $interval
     , $log
     , $rootScope
     , $scope
+    , $timeout
     , $translate
     , BattleSocket
     , ClientIdProvider
@@ -15,8 +17,13 @@ app.controller('AppController', function (
      * #################################################################################################################
      */
 
-    $scope.clientId  = null;
-    $scope.connected = false;
+    $scope.clientId   = ClientIdProvider.getClientId();
+    $scope.connected  = false;
+    $scope.saveTimer  = null;
+    $scope.sourceCode = {
+        css:  '* { background: \'red\'; }',
+        html: '<h1>Hello w0rld</h1>'
+    };
 
 
 
@@ -63,14 +70,6 @@ app.controller('AppController', function (
 
     });
 
-    $scope.$on('socket:receive_id', function (event, data) {
-        $log.log('BattleSocket: receive_id', event, data);
-
-        $scope.clientId = data['id'];
-
-        $log.log('BattleSocket: client id now:', $scope.clientId);
-    });
-
     /**
      * #################################################################################################################
      * ### Public scope methods                                                                                      ###
@@ -79,20 +78,50 @@ app.controller('AppController', function (
 
     $scope.getSourceCode = function ()
     {
+        var sourceCode = '';
 
+        sourceCode += '<html>';
+        sourceCode += '<head>';
+        sourceCode += '<style style="text/css">';
+        sourceCode += $scope.sourceCode.css;
+        sourceCode += '</style>';
+        sourceCode += '</head>';
+        sourceCode += '<body>';
+        sourceCode += $scope.sourceCode.html;
+        sourceCode += '</body>';
+        sourceCode += '</html>';
 
+        $log.log('AppController: getSourceCode', sourceCode);
 
+        return sourceCode;
     };
 
     $scope.init = function ()
     {
         $log.log('AppController: ready');
+
+        $scope.initTimer();
     };
 
 
 
+    $scope.initTimer = function ()
+    {
+        $scope.saveTimer = $interval($scope.sendSourceCode, 2500);
+    };
+
     // BattleSocket.upload
 
+    $scope.sendSourceCode = function ()
+    {
+        $log.log('AppController: sendSourceCode');
+
+        var sourceCode = $scope.getSourceCode();
+
+        BattleSocket.upload($scope.clientId, sourceCode);
+    };
+
+    // TODO: ACE
 
     /**
      * #################################################################################################################
