@@ -6,6 +6,9 @@ var modulesToLoad = [
     , 'LocalStorageModule'           //
     , 'ngIdle'                       //
     , 'pascalprecht.translate'       //
+    , 'ui.ace'                       //
 ];
 
-var app = angular.module('toolboxHtmlBattleClient', modulesToLoad);
+var app = angular.module('toolboxHtmlBattleClient', modulesToLoad).config(function($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist(['**']);
+});

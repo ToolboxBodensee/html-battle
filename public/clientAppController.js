@@ -21,8 +21,9 @@ app.controller('AppController', function (
     $scope.connected  = false;
     $scope.saveTimer  = null;
     $scope.sourceCode = {
-        css:  '* { background: \'red\'; }',
-        html: '<h1>Hello w0rld</h1>'
+        css:     '* { background: red; }',
+        html:    '<h1>Hello w0rld</h1>',
+        preview: ''
     };
 
 
@@ -70,6 +71,17 @@ app.controller('AppController', function (
 
     });
 
+    $scope.sourceCodeChanged = function()
+    {
+        var sourceCode       = $scope.getSourceCode();
+        var iFrameSourceCode = 'data:text/html;charset=utf-8,' + encodeURIComponent(sourceCode);
+
+        $scope.sourceCode.preview = iFrameSourceCode;
+
+
+        $scope.sendSourceCode();
+    };
+
     /**
      * #################################################################################################################
      * ### Public scope methods                                                                                      ###
@@ -100,6 +112,7 @@ app.controller('AppController', function (
     {
         $log.log('AppController: ready');
 
+        $scope.sourceCodeChanged();
         $scope.initTimer();
     };
 

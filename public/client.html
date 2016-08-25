@@ -14,6 +14,7 @@
         <link rel="stylesheet" type="text/css" href="bower_components/components-font-awesome/css/font-awesome.css" />
         <link rel="stylesheet" type="text/css" href="bower_components/font-awesome-animation/dist/font-awesome-animation.css">
         <link rel="stylesheet" type="text/css" href="bower_components/snackbarjs/dist/snackbar.css" />
+        <link rel="stylesheet" type="text/css" href="client.css" />
 
         <!-- Bower components -->
         <script type="text/javascript" src="bower_components/tether/dist/js/tether.min.js"></script>
@@ -28,6 +29,8 @@
         <script type="text/javascript" src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
         <script type="text/javascript" src="bower_components/angular-socket-io/socket.js"></script>
         <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
+        <script type="text/javascript" src="bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+        <script type="text/javascript" src="bower_components/angular-ui-ace/ui-ace.js"></script>
         <script type="text/javascript" src="bower_components/angular-uuid/uuid.js"></script>
         <script type="text/javascript" src="bower_components/moment/moment.js"></script>
         <script type="text/javascript" src="bower_components/ng-idle/angular-idle.js"></script>
@@ -53,21 +56,44 @@
 <br>
     id: <span>{{ clientId }}</span>
 
+preview
+
+
+
+    <iframe ng-src="{{ sourceCode.preview }}" sandbox="allow-same-origin allow-scripts">
+
+    </iframe>
 
 HTML:
-        <textarea ng-model="sourceCode.html">
+    <div
+            class="ace-editor"
+            ui-ace="
+            {
+                useWrapMode: true,
+                showGutter:  true,
+                theme:       'chrome',
+                onChange:    sourceCodeChanged,
+            }"
+            ng-model="sourceCode.html"
+    >
 
+    </div>
 
+    css:
 
-        </textarea>
-CSS:
-        <textarea ng-model="sourceCode.css">
+    <div
+            class="ace-editor"
+            ui-ace="
+            {
+                useWrapMode: true,
+                showGutter:  true,
+                theme:       'chrome',
+                onChange:    sourceCodeChanged,
+            }"
+            ng-model="sourceCode.css"
+    >
 
-
-
-        </textarea>
-
-
+    </div>
 
 
 

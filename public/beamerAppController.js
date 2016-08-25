@@ -68,13 +68,10 @@ app.controller('AppController', function (
 
     $scope.$on('socket:receive_upload', function (event, data) {
         $log.log('BattleSocket: receive_upload', event, data);
-//
+
         var iFrameSourceCode =  'data:text/html;charset=utf-8,' + encodeURIComponent(data.sourceCode);
 
         $log.log('BattleSocket: iFrameSourceCode', iFrameSourceCode);
-
-        var trustedIFrameSourceCode = $sce.getTrustedResourceUrl(iFrameSourceCode);
-
 
         $scope.sourceCodes[data.id] = iFrameSourceCode;
     });
