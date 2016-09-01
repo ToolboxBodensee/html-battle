@@ -84,7 +84,7 @@ app.controller('AppController', function (
             name:       (data.name || null),
             sourceCode: iFrameSourceCode
         };
-        
+
         $scope.userCount = Object.keys($scope.sourceCodes).length;
         var rowsAndColumns = 1;
 
