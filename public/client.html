@@ -62,7 +62,8 @@
                 <div class="navbar-collapse collapse navbar-warning-collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <span class="navbar-text">Status:
+                            <span class="navbar-text">
+                                Status:
                                 <span ng-if="connected">Verbunden</span>
                                 <span ng-if="!connected">Nicht verbunden</span>
                             </span>
@@ -71,78 +72,92 @@
                             Du bist: {{ clientId }} <span ng-if="username">({{ username }})</span>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><span class="navbar-text">Punkte: <span ng-model="points">0</span></span></li>
+                    <ul class="nav navbar-nav navbar-right" title="Punkte">
+                        <li><span class="navbar-text"><span ng-model="points">0</span> ✪</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" id="editor-body">
+            <div class="row">
+                <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-12" id="preview">
+                    <iframe ng-src="{{ sourceCode.preview }}" sandbox="allow-same-origin allow-scripts">
+
+                    </iframe>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="navbar navbar-warning">
+                        <div class="container-fluid">
+
+                            <div class="navbar-collapse collapse navbar-warning-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <span class="navbar-text">HTML</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="ace-editor"
+                        ui-ace="
+                        {
+                            useWrapMode: true,
+                            showGutter:  true,
+                            theme:       'chrome',
+                            onChange:    sourceCodeChanged,
+                        }"
+                        ng-model="sourceCode.html"
+                    >
+
+                    </div>
+                </div>
+                <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="navbar navbar-warning">
+                        <div class="container-fluid">
+
+                            <div class="navbar-collapse collapse navbar-warning-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <span class="navbar-text">CSS</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                            class="ace-editor"
+                            ui-ace="
+                        {
+                            useWrapMode: true,
+                            showGutter:  true,
+                            theme:       'chrome',
+                            onChange:    sourceCodeChanged,
+                        }"
+                            ng-model="sourceCode.css"
+                    >
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar navbar-warning">
+            <div class="container-fluid">
+
+                <div class="navbar-collapse collapse navbar-warning-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <span class="navbar-text">
+                                Aufgabe: <span>{{ quest || 'Warte auf Aufgabe...' }}</span>
+                            </span>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Radios</label>
-
-        <div class="col-lg-10">
-            <div class="radio radio-primary">
-                <label>
-                    <input type="radio" name="optionsRadios" checked="">
-                    Option one
-                </label>
-            </div>
-            <div class="radio radio-primary">
-                <label>
-                    <input type="radio" name="optionsRadios">
-                    Option two
-                </label>
-            </div>
-        </div>
-    </div>
-
-
-        <div id="editor-body">
-            <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <h2>HTML</h2>
-                <div
-                    class="ace-editor"
-                    ui-ace="
-                    {
-                        useWrapMode: true,
-                        showGutter:  true,
-                        theme:       'chrome',
-                        onChange:    sourceCodeChanged,
-                    }"
-                    ng-model="sourceCode.html"
-                >
-
-                </div>
-                <h2>CSS</h2>
-                <div
-                    class="ace-editor"
-                    ui-ace="
-                    {
-                        useWrapMode: true,
-                        showGutter:  true,
-                        theme:       'chrome',
-                        onChange:    sourceCodeChanged,
-                    }"
-                    ng-model="sourceCode.css"
-                >
-
-                </div>
-            </div>
-            <div class="col col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <iframe ng-src="{{ sourceCode.preview }}" sandbox="allow-same-origin allow-scripts">
-
-                </iframe>
-            </div>
-        </div>
     </body>
 </html>

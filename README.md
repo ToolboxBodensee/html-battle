@@ -10,11 +10,13 @@ We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/
 * style
 * ban feature?
 * voting?
+* reset-feature
 
 
 # TODO Michael:
 
 * Implement `client_set_username`
+* Implement `receive_quest`
 * Implement `receive_points`
 
 ## Authors

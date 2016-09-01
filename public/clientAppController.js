@@ -19,10 +19,11 @@ app.controller('AppController', function (
 
     $scope.clientId   = ClientIdProvider.getClientId();
     $scope.connected  = false;
+    $scope.quest      = null;
     $scope.points     = 0;
     $scope.saveTimer  = null;
     $scope.sourceCode = {
-        css:     '* { background: red; }',
+        css:     '*\n{\n    font-family: tahoma;\n    padding: 0;\n    margin: 0;\n    background: white;\n}\n\nh1\n{\n    color: blue;\n}',
         html:    '<h1>Hello w0rld</h1>',
         preview: ''
     };
@@ -77,6 +78,12 @@ app.controller('AppController', function (
         $log.log('BattleSocket: receive_points', event, data);
 
         $scope.points = data.points;
+    });
+
+    $scope.$on('socket:receive_quest', function (event, data) {
+        $log.log('BattleSocket: receive_quest', event, data);
+
+        $scope.quest = data.quest;
     });
 
     $scope.sourceCodeChanged = function()
