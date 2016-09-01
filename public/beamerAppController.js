@@ -133,9 +133,14 @@ app.controller('AppController', function (
         $('iframe').height(iframe);
     };
 
+    $scope.fullResetButtonPressed = function ()
+    {
+        BattleSocket.fullReset();
+    };
+
     $scope.headerClicked = function ()
     {
-        $scope.admin = true;
+        $scope.admin = !$scope.admin;
 
         $scope.fixHeight();
     };
@@ -146,6 +151,26 @@ app.controller('AppController', function (
 
 
         $scope.fixHeight();
+    };
+
+    $scope.setQuestButtonPressed = function ()
+    {
+        var newQuest = prompt('Bitte gib die neue Aufgabe an.', '');
+
+        if (newQuest)
+        {
+            BattleSocket.setQuest(newQuest);
+        }
+    };
+
+    $scope.addPoints = function (clientId)
+    {
+        var points = prompt('Bitte gib die hinzuzufügenden Punkte an.', '10');
+
+        if (points)
+        {
+            BattleSocket.addPoints(clientId, points)
+        }
     };
 
     /**

@@ -2,10 +2,6 @@
 
 We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/). It allows
 
-## TODO
-
-* points
-
 ## TODO Michael:
 
 * Implement `client_set_username`
@@ -16,7 +12,9 @@ We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/
 * Implement `disable_lock`
 * Implement `enable_lock`
 * Implement `clear_code`
-
+* Implement `set_quest`
+* Implement `client_add_points`
+* Implement `full_reset`
 
 ## Authors
 

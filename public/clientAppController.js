@@ -30,10 +30,6 @@ app.controller('AppController', function (
     };
     $scope.username   = null;
 
-
-
-
-
     /**
      * #################################################################################################################
      * ### Event listeners                                                                                           ###
@@ -195,8 +191,6 @@ app.controller('AppController', function (
         BattleSocket.upload($scope.clientId, sourceCode);
     };
 
-    // TODO: ACE
-
     $scope.usernameClicked = function()
     {
         var newUsername = prompt('Bitte gib deinen Benutzernamen an.', '');
@@ -204,8 +198,6 @@ app.controller('AppController', function (
         if (newUsername)
         {
             $scope.username = newUsername.substring(0, 24);
-
-
         }
     };
 

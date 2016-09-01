@@ -4,6 +4,10 @@
   font-size: 14px;
   height: 60px;
 }
+a,
+strong {
+  cursor: pointer;
+}
 .navbar-collapse {
   padding: 0 !important;
   margin: 0 !important;
@@ -22,6 +26,10 @@
   padding: 0;
   font-size: 0;
   overflow: hidden;
+}
+#source-codes .row .col i {
+  padding: 22px 0;
+  cursor: pointer;
 }
 #source-codes .row .col .navbar-text {
   overflow: hidden;

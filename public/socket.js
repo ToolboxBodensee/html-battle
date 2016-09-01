@@ -33,6 +33,16 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('disable_lock');
     BattleSocket.forward('enable_lock');
 
+    BattleSocket.addPoints = function (clientId, points)
+    {
+        $log.log('BattleSocket: addPoints', clientId, points);
+
+        BattleSocketIO.emit('client_add_points', {
+            id:       clientId,
+            points: points
+        });
+    };
+
     BattleSocket.clearCode = function ()
     {
         $log.log('BattleSocket: clearCode');
@@ -52,6 +62,22 @@ app.factory('BattleSocket', function (
         $log.log('BattleSocket: enable_lock');
 
         BattleSocketIO.emit('enable_lock', {});
+    };
+
+    BattleSocket.fullReset = function ()
+    {
+        $log.log('BattleSocket: fullReset');
+
+        BattleSocketIO.emit('full_reset', {});
+    };
+
+    BattleSocket.setQuest = function (quest)
+    {
+        $log.log('BattleSocket: setQuest', quest);
+
+        BattleSocketIO.emit('set_quest', {
+            quest: quest
+        });
     };
 
     BattleSocket.setUsername = function (clientId, username)
