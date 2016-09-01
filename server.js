@@ -91,4 +91,4 @@ io.use(function (socket, next) {
 
 
 // RUN -------------------------------
-server.listen(8080, '192.168.3.223');
+server.listen(8080, 'localhost');

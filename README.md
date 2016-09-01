@@ -11,6 +11,11 @@ We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/
 * ban feature?
 * voting?
 
+
+# TODO Michael:
+
+* Implement `client_set_username`
+
 ## Authors
 * [Thomas Kekeisen](https://github.com/blaues0cke)
 * [Michael Malura](https://github.com/maluramichael)

@@ -7,7 +7,7 @@ app.factory('BattleSocket', function (
     $log.log('BattleSocket: initializing');
 
     var socketUrl = 'http://192.168.3.223:8080';
-    // socketUrl = 'http://localhost:8080';
+    socketUrl = 'http://localhost:8080';
 
     $log.log('BattleSocket: socket url', socketUrl);
 
@@ -27,6 +27,15 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('unauthorized');
     BattleSocket.forward('receive_upload');
 
+    BattleSocket.setUsername = function (clientId, username)
+    {
+        $log.log('BattleSocket: setUsername', clientId, sourceCode);
+
+        BattleSocketIO.emit('client_set_username', {
+            id:       clientId,
+            username: username
+        });
+    };
 
     BattleSocket.upload = function (clientId, sourceCode)
     {

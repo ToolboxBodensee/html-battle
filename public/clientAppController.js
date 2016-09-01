@@ -136,6 +136,18 @@ app.controller('AppController', function (
 
     // TODO: ACE
 
+    $scope.usernameClicked = function()
+    {
+        var newUsername = prompt('Bitte gib deinen Benutzernamen an.', '');
+
+        if (newUsername)
+        {
+            $scope.username = newUsername.substring(0, 24);
+
+
+        }
+    };
+
     /**
      * #################################################################################################################
      * ### After initialization                                                                                      ###
