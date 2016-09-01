@@ -108,7 +108,10 @@ app.controller('AppController', function (
 
     $scope.clearCodeButtonPressed = function ()
     {
-        BattleSocket.clearCode();
+        if (confirm('Sicher, dass du die Code-Felder aller Nutzer leeren möchtest?'))
+        {
+            BattleSocket.clearCode();
+        }
     };
 
     $scope.disableLockButtonPressed = function ()
@@ -135,7 +138,10 @@ app.controller('AppController', function (
 
     $scope.fullResetButtonPressed = function ()
     {
-        BattleSocket.fullReset();
+        if (confirm('Sicher, dass du alles zurücksetzen möchtest?'))
+        {
+            BattleSocket.fullReset();
+        }
     };
 
     $scope.headerClicked = function ()
