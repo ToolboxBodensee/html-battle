@@ -24,6 +24,7 @@ app.controller('AppController', function (
     $scope.quest          = '';
     $scope.rowsAndColumns = 1;
     $scope.sourceCodes    = {};
+    $scope.userCount      = 0;
 
     /**
      * #################################################################################################################
@@ -79,16 +80,21 @@ app.controller('AppController', function (
 
         $log.log('BattleSocket: iFrameSourceCode', iFrameSourceCode);
 
-        var userCount      = Object.keys($scope.sourceCodes).length;
+        $scope.sourceCodes[data.id] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+        
+        $scope.userCount = Object.keys($scope.sourceCodes).length;
         var rowsAndColumns = 1;
 
-        while (rowsAndColumns * rowsAndColumns < userCount)
+        while (rowsAndColumns * rowsAndColumns < $scope.userCount)
         {
             ++rowsAndColumns;
         }
 
         $scope.rowsAndColumns = rowsAndColumns;
-        $scope.columnClass    = '-' + rowsAndColumns;
+        $scope.columnClass    = '-' + Math.ceil(12 / rowsAndColumns);
 
         $scope.fixHeight();
     });
@@ -101,10 +107,12 @@ app.controller('AppController', function (
 
     $scope.fixHeight = function ()
     {
+        console.log('fixHeight', $scope.rowsAndColumns);
+
         var windowHeight  = $(window).height();
         var navbarHeight  = $('.navbar').height();
         var previewHeight =  windowHeight - navbarHeight;
-        var iframe        = (previewHeight / $scope.rowsAndColumns) - navbarHeight;
+        var iframe        = (previewHeight / ($scope.userCount < 3 ? 1 : $scope.rowsAndColumns)) - navbarHeight;
 
         $('iframe').height(iframe);
     };
