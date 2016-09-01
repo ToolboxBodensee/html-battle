@@ -120,7 +120,7 @@ app.controller('AppController', function (
     {
         var windowHeight  = $(window).height();
         var previewHeight = $('#preview').height();
-        var navbarHeight  =$('.navbar').height();
+        var navbarHeight  = $('.navbar').height();
         var editorHeight  = windowHeight - previewHeight - (navbarHeight * 3);
 
         $('.ace-editor').height(editorHeight);

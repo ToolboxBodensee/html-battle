@@ -2,7 +2,7 @@
 
 We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/). It allows
 
-# TODO
+## TODO
 
 * points
 * todos for the clients
@@ -10,10 +10,10 @@ We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/
 * style
 * ban feature?
 * voting?
+* syntax highlighting
 * reset-feature
 
-
-# TODO Michael:
+## TODO Michael:
 
 * Implement `client_set_username`
 * Implement `receive_quest`
@@ -22,5 +22,6 @@ We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/
 * Implement `lock_enabled`
 
 ## Authors
+
 * [Thomas Kekeisen](https://github.com/blaues0cke)
 * [Michael Malura](https://github.com/maluramichael)

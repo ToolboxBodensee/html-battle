@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <title>Toolbox HTML Battle Beamer</title>
 
-
         <!-- External css -->
         <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.css" />
@@ -14,6 +13,7 @@
         <link rel="stylesheet" type="text/css" href="bower_components/components-font-awesome/css/font-awesome.css" />
         <link rel="stylesheet" type="text/css" href="bower_components/font-awesome-animation/dist/font-awesome-animation.css">
         <link rel="stylesheet" type="text/css" href="bower_components/snackbarjs/dist/snackbar.css" />
+        <link rel="stylesheet" type="text/css" href="beamer.css" />
 
         <!-- Bower components -->
         <script type="text/javascript" src="bower_components/tether/dist/js/tether.min.js"></script>
@@ -34,44 +34,71 @@
         <script type="text/javascript" src="bower_components/socket.io-client/socket.io.js"></script>
         <script type="text/javascript" src="bower_components/underscore/underscore.js"></script>
 
-
-
+        <!-- App -->
         <script type="text/javascript" src="beamerApp.js"></script>
-
         <script type="text/javascript" src="beamerTypeProvider.js"></script>
-
         <script type="text/javascript" src="beamerAppController.js"></script>
         <script type="text/javascript" src="clientIdProvider.js"></script>
         <script type="text/javascript" src="socket.js"></script>
-
-
-
     </head>
     <body>
-
-
-    status: <span ng-if="connected">connected</span>  <span ng-if="!connected">not connected</span>
-
-<br>
-    id: <span>{{ clientId }}</span>
-
-    <div id="source-codes">
-
-        <div ng-repeat="(remoteClientId, sourceCode) in sourceCodes">
-            <h2>{{ remoteClientId }}</h2>
-            <iframe ng-src="{{ sourceCode }}" sandbox="allow-same-origin allow-scripts">
-
-            </iframe>
+        <div class="navbar navbar-warning">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-warning-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <strong class="navbar-text">Toolbox HTML-Battle</strong>
+                </div>
+                <div class="navbar-collapse collapse navbar-warning-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <span class="navbar-text">
+                                Status:
+                                <span ng-if="connected">Verbunden</span>
+                                <span ng-if="!connected">Nicht verbunden</span>
+                            </span>
+                        </li>
+                        <li class="navbar-text" ng-click="usernameClicked()" role="button">
+                            Du bist: {{ clientId }}
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <span class="navbar-text">
+                                Aufgabe: <span>{{ quest || 'Warte auf Aufgabe...' }}</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+        <div id="source-codes" class="container-fluid">
+            <div class="row">
+                <div ng-repeat="(remoteClientId, data) in sourceCodes"
+                     class="source-code col col-xs{{ columnClass }} col-sm{{ columnClass }} col-md{{ columnClass }} col-lg{{ columnClass }}"
+                >
+                    <iframe ng-src="{{ data.sourceCode }}" sandbox="allow-same-origin allow-scripts">
+
+                    </iframe>
+                    <div class="navbar navbar-warning">
+                        <div class="container-fluid">
+                            <div class="navbar-collapse collapse navbar-warning-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <span class="navbar-text">{{ data.name || remoteClientId }} ({{ data.points || '0'}} ✪)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
-    </div>
-
-
-
-
-
-
+        </div>
     </body>
 </html>

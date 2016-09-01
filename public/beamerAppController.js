@@ -18,12 +18,12 @@ app.controller('AppController', function (
      * #################################################################################################################
      */
 
-    $scope.clientId    = ClientIdProvider.getClientId();
-    $scope.connected   = false;
-    $scope.sourceCodes = {};
-
-
-
+    $scope.clientId       = ClientIdProvider.getClientId();
+    $scope.columnClass    = '-12';
+    $scope.connected      = false;
+    $scope.quest          = '';
+    $scope.rowsAndColumns = 1;
+    $scope.sourceCodes    = {};
 
     /**
      * #################################################################################################################
@@ -66,6 +66,12 @@ app.controller('AppController', function (
 
     });
 
+    $scope.$on('socket:receive_quest', function (event, data) {
+        $log.log('BattleSocket: receive_quest', event, data);
+
+        $scope.quest = data.quest;
+    });
+
     $scope.$on('socket:receive_upload', function (event, data) {
         $log.log('BattleSocket: receive_upload', event, data);
 
@@ -73,7 +79,75 @@ app.controller('AppController', function (
 
         $log.log('BattleSocket: iFrameSourceCode', iFrameSourceCode);
 
-        $scope.sourceCodes[data.id] = iFrameSourceCode;
+        $scope.sourceCodes[data.id] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+
+        $scope.sourceCodes[data.id + 'Gsg'] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+
+        $scope.sourceCodes[data.id + 'G52sg'] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+
+        $scope.sourceCodes[data.id + 'Gs525g'] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+
+        $scope.sourceCodes[data.id + 'Gsgdgg'] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+
+        $scope.sourceCodes[data.id + 'Gsgsg'] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+
+        $scope.sourceCodes[data.id + 'Gs534543g'] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+        $scope.sourceCodes[data.id + 'Gs5343543g'] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+        $scope.sourceCodes[data.id + 'Gs5345343g'] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+        $scope.sourceCodes[data.id + 'G4s534543g'] = {
+            name:       (data.name || null),
+            sourceCode: iFrameSourceCode
+        };
+
+
+        var userCount      = Object.keys($scope.sourceCodes).length;
+        var rowsAndColumns = 1;
+
+        while (rowsAndColumns * rowsAndColumns < userCount)
+        {
+            ++rowsAndColumns;
+        }
+
+        $scope.rowsAndColumns = rowsAndColumns;
+        $scope.columnClass    = '-' + rowsAndColumns;
+
+        $scope.fixHeight();
+
+console.log('test', userCount,  $scope.rowsAndColumns);
+
+
+
+
+
+
+
     });
 
     /**
@@ -82,12 +156,27 @@ app.controller('AppController', function (
      * #################################################################################################################
      */
 
+    $scope.fixHeight = function ()
+    {
+        var windowHeight  = $(window).height();
+        var navbarHeight  = $('.navbar').height();
+        var previewHeight =  windowHeight - navbarHeight;
+        var iframe        = (previewHeight / $scope.rowsAndColumns) - navbarHeight;
+
+
+
+
+        $('iframe').height(iframe);
+
+
+    };
+
     $scope.init = function ()
     {
         $log.log('AppController: ready');
 
 
-
+        $scope.fixHeight();
 
     };
 
