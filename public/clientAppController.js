@@ -103,6 +103,16 @@ app.controller('AppController', function (
      * #################################################################################################################
      */
 
+    $scope.fixEditorHeight = function ()
+    {
+        var windowHeight  = $(window).height();
+        var previewHeight = $('#preview').height();
+        var navbarHeight  =$('.navbar').height();
+        var editorHeight  = windowHeight - previewHeight - (navbarHeight * 3);
+
+        $('.ace-editor').height(editorHeight);
+    };
+
     $scope.getSourceCode = function ()
     {
         var sourceCode = '';
@@ -129,6 +139,9 @@ app.controller('AppController', function (
 
         $scope.sourceCodeChanged();
         $scope.initTimer();
+        $scope.fixEditorHeight();
+
+        $(window).resize($scope.fixEditorHeight);
     };
 
 

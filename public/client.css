@@ -16,9 +16,6 @@
   margin: 0;
   padding: 0;
 }
-.ace-editor {
-  height: 500px;
-}
 #preview {
   height: 200px;
 }
