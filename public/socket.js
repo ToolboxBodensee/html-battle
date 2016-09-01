@@ -25,6 +25,7 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('reconnect_failed');
     BattleSocket.forward('reconnecting');
     BattleSocket.forward('unauthorized');
+    BattleSocket.forward('receive_points');
     BattleSocket.forward('receive_upload');
 
     BattleSocket.setUsername = function (clientId, username)

@@ -15,6 +15,7 @@ We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/
 # TODO Michael:
 
 * Implement `client_set_username`
+* Implement `receive_points`
 
 ## Authors
 * [Thomas Kekeisen](https://github.com/blaues0cke)

@@ -19,12 +19,14 @@ app.controller('AppController', function (
 
     $scope.clientId   = ClientIdProvider.getClientId();
     $scope.connected  = false;
+    $scope.points     = 0;
     $scope.saveTimer  = null;
     $scope.sourceCode = {
         css:     '* { background: red; }',
         html:    '<h1>Hello w0rld</h1>',
         preview: ''
     };
+    $scope.username   = null;
 
 
 
@@ -69,6 +71,12 @@ app.controller('AppController', function (
         $log.log('BattleSocket: reconnect_attempt', event, data);
 
 
+    });
+
+    $scope.$on('socket:receive_points', function (event, data) {
+        $log.log('BattleSocket: receive_points', event, data);
+
+        $scope.points = data.points;
     });
 
     $scope.sourceCodeChanged = function()
