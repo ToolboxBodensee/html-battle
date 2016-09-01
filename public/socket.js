@@ -30,6 +30,29 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('receive_upload');
     BattleSocket.forward('lock_disabled');
     BattleSocket.forward('lock_enabled');
+    BattleSocket.forward('disable_lock');
+    BattleSocket.forward('enable_lock');
+
+    BattleSocket.clearCode = function ()
+    {
+        $log.log('BattleSocket: clearCode');
+
+        BattleSocketIO.emit('clear_code', {});
+    };
+
+    BattleSocket.disableLock = function ()
+    {
+        $log.log('BattleSocket: disable_lock');
+
+        BattleSocketIO.emit('disable_lock', {});
+    };
+
+    BattleSocket.enableLock = function ()
+    {
+        $log.log('BattleSocket: enable_lock');
+
+        BattleSocketIO.emit('enable_lock', {});
+    };
 
     BattleSocket.setUsername = function (clientId, username)
     {

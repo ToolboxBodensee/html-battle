@@ -50,7 +50,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <strong class="navbar-text">Toolbox HTML-Battle</strong>
+                    <strong class="navbar-text" ng-click="headerClicked();">Toolbox HTML-Battle</strong>
                 </div>
                 <div class="navbar-collapse collapse navbar-warning-collapse">
                     <ul class="nav navbar-nav">
@@ -96,9 +96,24 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="navbar navbar-warning" ng-show="admin">
+            <div class="container-fluid">
 
-
-
+                <div class="navbar-collapse collapse navbar-warning-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a ng-click="clearCodeButtonPressed()">Code löschen</a>
+                        </li>
+                        <li>
+                            <a ng-click="enableLockButtonPressed()">Sperre aktivieren</a>
+                        </li>
+                        <li>
+                            <a ng-click="disableLockButtonPressed()">Sperre deaktivieren</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </body>
 </html>

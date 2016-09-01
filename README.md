@@ -5,13 +5,6 @@ We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/
 ## TODO
 
 * points
-* todos for the clients
-* lock mode (admin should be able to lock all clients)
-* style
-* ban feature?
-* voting?
-* syntax highlighting
-* reset-feature
 
 ## TODO Michael:
 
@@ -20,6 +13,10 @@ We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/
 * Implement `receive_points`
 * Implement `lock_disabled`
 * Implement `lock_enabled`
+* Implement `disable_lock`
+* Implement `enable_lock`
+* Implement `clear_code`
+
 
 ## Authors
 

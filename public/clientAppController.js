@@ -24,8 +24,8 @@ app.controller('AppController', function (
     $scope.points     = 0;
     $scope.saveTimer  = null;
     $scope.sourceCode = {
-        css:     '*\n{\n    font-family: tahoma;\n    padding: 0;\n    margin: 0;\n    background: white;\n}\n\nh1\n{\n    color: blue;\n}',
-        html:    '<h1>Hello w0rld</h1>',
+        css:     '',
+        html:    '',
         preview: ''
     };
     $scope.username   = null;
@@ -99,6 +99,18 @@ app.controller('AppController', function (
         $scope.locked = true;
     });
 
+    $scope.$on('socket:lock_enabled', function (event, data) {
+        $log.log('BattleSocket: lock_enabled', event, data);
+
+        $scope.locked = true;
+    });
+
+    $scope.$on('socket:clear_code', function (event, data) {
+        $log.log('BattleSocket: clear_code', event, data);
+
+        $scope.reset();
+    });
+
     $scope.sourceCodeChanged = function()
     {
         var sourceCode       = $scope.getSourceCode();
@@ -150,6 +162,7 @@ app.controller('AppController', function (
     {
         $log.log('AppController: ready');
 
+        $scope.reset();
         $scope.sourceCodeChanged();
         $scope.initTimer();
         $scope.fixEditorHeight();
@@ -164,7 +177,14 @@ app.controller('AppController', function (
         $scope.saveTimer = $interval($scope.sendSourceCode, 2500);
     };
 
-    // BattleSocket.upload
+    $scope.reset = function ()
+    {
+        $scope.sourceCode = {
+            css:     '*\n{\n    font-family: tahoma;\n    padding: 0;\n    margin: 0;\n    background: white;\n}\n\nh1\n{\n    color: blue;\n}',
+            html:    '<h1>Hello w0rld</h1>',
+            preview: ''
+        };
+    };
 
     $scope.sendSourceCode = function ()
     {

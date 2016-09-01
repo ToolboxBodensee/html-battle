@@ -18,6 +18,7 @@ app.controller('AppController', function (
      * #################################################################################################################
      */
 
+    $scope.admin          = false;
     $scope.clientId       = ClientIdProvider.getClientId();
     $scope.columnClass    = '-12';
     $scope.connected      = false;
@@ -105,16 +106,38 @@ app.controller('AppController', function (
      * #################################################################################################################
      */
 
+    $scope.clearCodeButtonPressed = function ()
+    {
+        BattleSocket.clearCode();
+    };
+
+    $scope.disableLockButtonPressed = function ()
+    {
+        BattleSocket.disableLock();
+    };
+
+    $scope.enableLockButtonPressed = function ()
+    {
+        BattleSocket.enableLock();
+    };
+
     $scope.fixHeight = function ()
     {
         console.log('fixHeight', $scope.rowsAndColumns);
 
         var windowHeight  = $(window).height();
         var navbarHeight  = $('.navbar').height();
-        var previewHeight =  windowHeight - navbarHeight;
+        var previewHeight =  windowHeight - (navbarHeight * ($scope.admin ? 2 : 1));
         var iframe        = (previewHeight / ($scope.userCount < 3 ? 1 : $scope.rowsAndColumns)) - navbarHeight;
 
         $('iframe').height(iframe);
+    };
+
+    $scope.headerClicked = function ()
+    {
+        $scope.admin = true;
+
+        $scope.fixHeight();
     };
 
     $scope.init = function ()
