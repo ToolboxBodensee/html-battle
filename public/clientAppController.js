@@ -19,6 +19,7 @@ app.controller('AppController', function (
 
     $scope.clientId   = ClientIdProvider.getClientId();
     $scope.connected  = false;
+    $scope.locked     = false;
     $scope.quest      = null;
     $scope.points     = 0;
     $scope.saveTimer  = null;
@@ -84,6 +85,18 @@ app.controller('AppController', function (
         $log.log('BattleSocket: receive_quest', event, data);
 
         $scope.quest = data.quest;
+    });
+
+    $scope.$on('socket:lock_disabled', function (event, data) {
+        $log.log('BattleSocket: lock_disabled', event, data);
+
+        $scope.locked = false;
+    });
+
+    $scope.$on('socket:lock_enabled', function (event, data) {
+        $log.log('BattleSocket: lock_enabled', event, data);
+
+        $scope.locked = true;
     });
 
     $scope.sourceCodeChanged = function()

@@ -24,3 +24,16 @@
   width: 100%;
   height: 100%;
 }
+#lockOverlay {
+  z-index: 1337;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: center;
+  color: #FFF;
+  font-size: 100px;
+  line-height: 300px;
+}

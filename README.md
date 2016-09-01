@@ -18,6 +18,8 @@ We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/
 * Implement `client_set_username`
 * Implement `receive_quest`
 * Implement `receive_points`
+* Implement `lock_disabled`
+* Implement `lock_enabled`
 
 ## Authors
 * [Thomas Kekeisen](https://github.com/blaues0cke)

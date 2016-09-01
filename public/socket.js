@@ -28,6 +28,8 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('receive_quest');
     BattleSocket.forward('receive_points');
     BattleSocket.forward('receive_upload');
+    BattleSocket.forward('lock_disabled');
+    BattleSocket.forward('lock_enabled');
 
     BattleSocket.setUsername = function (clientId, username)
     {
