@@ -89,7 +89,13 @@ app.controller('AppController', function (
     $scope.$on('socket:clear_code', function (event, data) {
         $log.log('BattleSocket: clear_code', event, data);
 
-        $scope.reset();
+        $scope.clearCode();
+    });
+
+    $scope.$on('socket:full_reset', function (event, data) {
+        $log.log('BattleSocket: full_reset', event, data);
+
+        $scope.fullReset();
     });
 
     $scope.sourceCodeChanged = function()
@@ -142,7 +148,7 @@ app.controller('AppController', function (
     {
         $log.log('AppController: ready');
 
-        $scope.reset();
+        $scope.fullReset();
         $scope.sourceCodeChanged();
         $scope.initTimer();
         $scope.fixEditorHeight();
@@ -155,13 +161,19 @@ app.controller('AppController', function (
         $scope.saveTimer = $interval($scope.sendSourceCode, 2500);
     };
 
-    $scope.reset = function ()
+    $scope.clearCode = function ()
     {
         $scope.sourceCode = {
             css:     '*\n{\n    font-family: tahoma;\n    padding: 0;\n    margin: 0;\n    background: white;\n}\n\nh1\n{\n    color: blue;\n}',
             html:    '<h1>Hello w0rld</h1>',
             preview: ''
         };
+    };
+
+    $scope.fullReset = function ()
+    {
+		$scope.clearCode();
+		$scope.points = 0;
     };
 
     $scope.sendSourceCode = function ()

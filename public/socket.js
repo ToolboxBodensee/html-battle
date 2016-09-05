@@ -32,7 +32,9 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('lock_disabled');
     BattleSocket.forward('lock_enabled');
     BattleSocket.forward('disable_lock');
-    BattleSocket.forward('enable_lock');
+	BattleSocket.forward('enable_lock');
+	BattleSocket.forward('clear_code');
+    BattleSocket.forward('full_reset');
 
     BattleSocket.addPoints = function (clientId, points)
     {

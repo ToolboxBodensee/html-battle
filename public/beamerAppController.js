@@ -146,6 +146,11 @@ app.controller('AppController', function (
     {
         if (confirm('Sicher, dass du alles zurücksetzen möchtest?'))
         {
+			var ids = Object.keys($scope.sourceCodes);
+			for(var index = 0, length = ids.length; index < length; index++){
+				$scope.sourceCodes[ids[index]].points = 0;
+				// TODO: maybe reset the sourceCode too
+			}
             BattleSocket.fullReset();
         }
     };
