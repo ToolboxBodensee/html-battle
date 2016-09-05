@@ -17,47 +17,64 @@ var admin = null;
 
 // HELPR ---
 
-const clientUpdatedSourceCode = (id, sourceCode)=> {
-    if (beamer && beamer.socket) {
-        beamer.socket.emit('receive_upload', {id, sourceCode});
-    }
-    if (admin && admin.socket) {
-        admin.socket.emit('receive_upload', {id, sourceCode});
+const clientUpdatedSourceCode = (id, sourceCode) => {
+    if (beamer) {
+        io.to(beamer).emit('receive_upload', {
+            id,
+            sourceCode
+        });
     }
 };
 
-const clientDisconnected = (id)=> {
-    if (beamer && beamer.socket) {
-        beamer.socket.emit('client_disconnected', {id});
+const clientDisconnected = (id) => {
+    if (beamer) {
+        io.to(beamer).emit('client_disconnected', {
+            id
+        });
     }
-    if (admin && admin.socket) {
-        admin.socket.emit('client_disconnected', {id});
+};
+
+const passEventToBeamer = (id, name, data) => {
+    if (beamer) {
+        io.to(beamer).emit(name, Object.assign({
+            id
+        }, data));
+    }
+};
+
+const passEventToClients = (name, data) => {
+    const ids = _.chain(io.sockets.connected).values().filter({
+        type: 'client'
+    }).map('id').value();
+    for (var index = 0, length = ids.length; index < length; index++) {
+        const id = ids[index];
+		console.log('beamer >', id, name, data)
+        io.to(id).emit(name, data);
     }
 };
 
 // GENERAL -------------------------------
-io.on('connection', (socket)=> {
+io.on('connection', (socket) => {
     console.log('connected', socket.id, socket.type);
 
     // CLIENT -------------------------------
     if (socket.type === 'client') {
-        socket.on('client_upload', (data)=> {
-            console.log('client.upload', data.id, data.sourceCode.length);
-            socket.sourceCode = data.sourceCode;
-            clientUpdatedSourceCode(data.id, data.sourceCode);
-        });
-        socket.on('disconnect', (data)=> {
-            console.log('client.disconnected', socket.id);
-            clientDisconnected(socket.id);
-        });
+        socket.on('client_upload', (data) => clientUpdatedSourceCode(data.id, data.sourceCode));
+        socket.on('disconnect', (data) => clientDisconnected(socket.id));
+        socket.on('client_set_username', (data) => passEventToBeamer(socket.id, 'client_set_username', data));
     } else if (socket.type === 'beamer') {
-        beamer = {socket, type: 'beamer'};
-    } else if (socket.type === 'admin') {
-        admin = {socket, type: 'admin'};
+        beamer = socket.id;
+
+		socket.on('client_add_points', (data) => passEventToClients('receive_points', data));
+		socket.on('clear_code', (data) => passEventToClients('clear_code', data));
+		socket.on('enable_lock', (data) => passEventToClients('lock_enabled', data));
+		socket.on('disable_lock', (data) => passEventToClients('lock_disabled', data));
+		socket.on('set_quest', (data) => passEventToClients('receive_quest', data));
+        socket.on('full_reset', (data) => passEventToClients('full_reset', data));
     }
 });
 
-io.use(function (socket, next) {
+io.use(function(socket, next) {
     const id = socket.handshake.query.id;
     if (id === undefined || id === null || id === 'null' || id === 'undefined') {
         return next(new Error('id is not defined'));
