@@ -81,10 +81,16 @@ app.controller('AppController', function (
 
         $log.log('BattleSocket: iFrameSourceCode', iFrameSourceCode);
 
-        $scope.sourceCodes[data.id] = {
-            name:       (data.name || null),
-            sourceCode: iFrameSourceCode
-        };
+		if (!$scope.sourceCodes[data.id]) {
+			// TODO: create a 'createInitialSource' method
+			$scope.sourceCodes[data.id] = {};
+		}
+		if (data.name) {
+			$scope.sourceCodes[data.id].name = data.name;
+		}
+		if (data.sourceCode) {
+			$scope.sourceCodes[data.id].sourceCode = iFrameSourceCode;
+		}
 
         $scope.userCount = Object.keys($scope.sourceCodes).length;
         var rowsAndColumns = 1;
@@ -175,7 +181,12 @@ app.controller('AppController', function (
 
         if (points)
         {
-            BattleSocket.addPoints(clientId, points)
+			points = Math.max(0, parseFloat(points));
+			if (!$scope.sourceCodes[clientId].points) {
+				$scope.sourceCodes[clientId].points = 0;
+			}
+			$scope.sourceCodes[clientId].points += points;
+            BattleSocket.addPoints(clientId, points);
         }
     };
 
