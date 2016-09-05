@@ -57,6 +57,11 @@ const passEventToClients = (name, data) => {
     }
 };
 
+const passEventToClient = (id, name, data) => {
+	console.log('beamer >', id, name)
+    io.to(id).emit(name, data);
+};
+
 // GENERAL -------------------------------
 io.on('connection', (socket) => {
     console.log('connected', socket.id, socket.type);
@@ -69,7 +74,7 @@ io.on('connection', (socket) => {
     } else if (socket.type === 'beamer') {
         beamer = socket.id;
 
-		socket.on('client_add_points', (data) => passEventToClients('receive_points', data));
+		socket.on('client_add_points', (data) => passEventToClient(data.id, 'receive_points', data));
 		socket.on('clear_code', (data) => passEventToClients('clear_code', data));
 		socket.on('enable_lock', (data) => passEventToClients('lock_enabled', data));
 		socket.on('disable_lock', (data) => passEventToClients('lock_disabled', data));
