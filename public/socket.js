@@ -82,7 +82,7 @@ app.factory('BattleSocket', function (
 
     BattleSocket.setUsername = function (clientId, username)
     {
-        $log.log('BattleSocket: setUsername', clientId, sourceCode);
+        $log.log('BattleSocket: setUsername', clientId, username);
 
         BattleSocketIO.emit('client_set_username', {
             id:       clientId,

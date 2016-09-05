@@ -180,6 +180,7 @@ app.controller('AppController', function (
         if (newUsername)
         {
             $scope.username = newUsername.substring(0, 24);
+			BattleSocket.setUsername($scope.clientId, newUsername);
         }
     };
 
