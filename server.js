@@ -35,11 +35,15 @@ const clientDisconnected = (id) => {
 };
 
 const passEventToBeamer = (id, name, data) => {
+	console.log(id, '> beamer', name)
+
     if (beamer) {
         io.to(beamer).emit(name, Object.assign({
             id
         }, data));
-    }
+    } else {
+		console.log('beamer is not defined');
+	}
 };
 
 const passEventToClients = (name, data) => {
@@ -48,7 +52,7 @@ const passEventToClients = (name, data) => {
     }).map('id').value();
     for (var index = 0, length = ids.length; index < length; index++) {
         const id = ids[index];
-		console.log('beamer >', id, name, data)
+		console.log('beamer >', id, name)
         io.to(id).emit(name, data);
     }
 };
@@ -59,9 +63,9 @@ io.on('connection', (socket) => {
 
     // CLIENT -------------------------------
     if (socket.type === 'client') {
-        socket.on('client_upload', (data) => clientUpdatedSourceCode(data.id, data.sourceCode));
+        socket.on('client_upload', (data) => passEventToBeamer(socket.id, 'receive_upload', data));
         socket.on('disconnect', (data) => clientDisconnected(socket.id));
-        socket.on('client_set_username', (data) => passEventToBeamer(socket.id, 'client_set_username', data));
+        socket.on('client_set_username', (data) => passEventToBeamer(socket.id, 'receive_username', data));
     } else if (socket.type === 'beamer') {
         beamer = socket.id;
 

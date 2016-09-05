@@ -27,7 +27,8 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('unauthorized');
     BattleSocket.forward('receive_quest');
     BattleSocket.forward('receive_points');
-    BattleSocket.forward('receive_upload');
+	BattleSocket.forward('receive_upload');
+    BattleSocket.forward('receive_username');
     BattleSocket.forward('lock_disabled');
     BattleSocket.forward('lock_enabled');
     BattleSocket.forward('disable_lock');
@@ -90,12 +91,13 @@ app.factory('BattleSocket', function (
         });
     };
 
-    BattleSocket.upload = function (clientId, sourceCode)
+    BattleSocket.upload = function (clientId, username, sourceCode)
     {
-        $log.log('BattleSocket: upload', clientId, sourceCode);
+        $log.log('BattleSocket: upload', clientId, username, sourceCode);
 
         BattleSocketIO.emit('client_upload', {
             id:         clientId,
+			name:       username,
             sourceCode: sourceCode
         });
     };

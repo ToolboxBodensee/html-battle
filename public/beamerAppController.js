@@ -66,6 +66,14 @@ app.controller('AppController', function (
         $scope.quest = data.quest;
     });
 
+    $scope.$on('socket:receive_username', function (event, data) {
+        $log.log('BattleSocket: receive_username', event, data);
+		var user = $scope.sourceCodes[data.id];
+		if (user) {
+			user.name = data.username;
+		}
+    });
+
     $scope.$on('socket:receive_upload', function (event, data) {
         $log.log('BattleSocket: receive_upload', event, data);
 

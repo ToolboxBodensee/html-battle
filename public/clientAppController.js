@@ -170,7 +170,7 @@ app.controller('AppController', function (
 
         var sourceCode = $scope.getSourceCode();
 
-        BattleSocket.upload($scope.clientId, sourceCode);
+        BattleSocket.upload($scope.clientId, $scope.username, sourceCode);
     };
 
     $scope.usernameClicked = function()
