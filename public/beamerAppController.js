@@ -46,26 +46,18 @@ app.controller('AppController', function (
 
     $scope.$on('socket:disconnect', function (event, data) {
         $log.log('BattleSocket: disconnect', event, data);
-
-        
     });
 
     $scope.$on('socket:connect_error', function (event, data) {
         $log.log('BattleSocket: connect_error', event, data);
-
-
     });
 
     $scope.$on('socket:reconnecting', function (event, data) {
         $log.log('BattleSocket: reconnecting', event, data);
-
-
     });
 
     $scope.$on('socket:reconnect_attempt', function (event, data) {
         $log.log('BattleSocket: reconnect_attempt', event, data);
-
-
     });
 
     $scope.$on('socket:receive_quest', function (event, data) {

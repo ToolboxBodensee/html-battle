@@ -44,31 +44,22 @@ app.controller('AppController', function (
 
     $scope.$on('socket:error', function (event, data) {
         $log.log('BattleSocket: error', event, data);
-
     });
 
     $scope.$on('socket:disconnect', function (event, data) {
         $log.log('BattleSocket: disconnect', event, data);
-
-        
     });
 
     $scope.$on('socket:connect_error', function (event, data) {
         $log.log('BattleSocket: connect_error', event, data);
-
-
     });
 
     $scope.$on('socket:reconnecting', function (event, data) {
         $log.log('BattleSocket: reconnecting', event, data);
-
-
     });
 
     $scope.$on('socket:reconnect_attempt', function (event, data) {
         $log.log('BattleSocket: reconnect_attempt', event, data);
-
-
     });
 
     $scope.$on('socket:receive_points', function (event, data) {
@@ -95,12 +86,6 @@ app.controller('AppController', function (
         $scope.locked = true;
     });
 
-    $scope.$on('socket:lock_enabled', function (event, data) {
-        $log.log('BattleSocket: lock_enabled', event, data);
-
-        $scope.locked = true;
-    });
-
     $scope.$on('socket:clear_code', function (event, data) {
         $log.log('BattleSocket: clear_code', event, data);
 
@@ -113,7 +98,6 @@ app.controller('AppController', function (
         var iFrameSourceCode = 'data:text/html;charset=utf-8,' + encodeURIComponent(sourceCode);
 
         $scope.sourceCode.preview = iFrameSourceCode;
-
 
         $scope.sendSourceCode();
     };
@@ -165,8 +149,6 @@ app.controller('AppController', function (
 
         $(window).resize($scope.fixEditorHeight);
     };
-
-
 
     $scope.initTimer = function ()
     {
