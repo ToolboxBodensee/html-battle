@@ -1,20 +1,13 @@
 # html battle
 
-We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/). It allows
+We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/)
 
-## TODO Michael:
+## Features
 
-* Implement `client_set_username`
-* Implement `receive_quest`
-* Implement `receive_points`
-* Implement `lock_disabled`
-* Implement `lock_enabled`
-* Implement `disable_lock`
-* Implement `enable_lock`
-* Implement `clear_code`
-* Implement `set_quest`
-* Implement `client_add_points`
-* Implement `full_reset`
+* Usernames
+* Points
+* Quests
+* Locking
 
 ## Authors
 
