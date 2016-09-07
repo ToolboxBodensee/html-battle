@@ -65,7 +65,7 @@ app.controller('AppController', function (
     $scope.$on('socket:receive_points', function (event, data) {
         $log.log('BattleSocket: receive_points', event, data);
 
-        $scope.points += parseFloat(data.points);
+        $scope.points = parseFloat(data.points);
     });
 
     $scope.$on('socket:receive_quest', function (event, data) {

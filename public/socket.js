@@ -7,7 +7,7 @@ app.factory('BattleSocket', function (
     $log.log('BattleSocket: initializing');
 
     var socketUrl = 'http://192.168.3.223:8080';
-    socketUrl = 'http://localhost:8080';
+    socketUrl = 'http://192.168.178.55:8080';
 
     $log.log('BattleSocket: socket url', socketUrl);
 
@@ -34,6 +34,7 @@ app.factory('BattleSocket', function (
     BattleSocket.forward('disable_lock');
 	BattleSocket.forward('enable_lock');
 	BattleSocket.forward('clear_code');
+	BattleSocket.forward('client_disconnected');
     BattleSocket.forward('full_reset');
 
     BattleSocket.addPoints = function (clientId, points)

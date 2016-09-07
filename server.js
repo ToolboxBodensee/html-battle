@@ -12,38 +12,61 @@ const _ = require('lodash');
 app.use(express.static(__dirname + '/public'));
 
 // DATA -------------------------------
-var beamer = null;
+var beamers = [];
 var admin = null;
 
 // HELPR ---
 
 const clientUpdatedSourceCode = (id, sourceCode) => {
-    if (beamer) {
-        io.to(beamer).emit('receive_upload', {
-            id,
-            sourceCode
-        });
+
+    for (var beamer of beamers)
+    {
+
+
+        if (beamer) {
+            io.to(beamer).emit('receive_upload', {
+                id,
+                sourceCode
+            });
+        }
     }
 };
 
 const clientDisconnected = (id) => {
-    if (beamer) {
-        io.to(beamer).emit('client_disconnected', {
-            id
-        });
+    for (var beamer of beamers) {
+        if (beamer) {
+            io.to(beamer).emit('client_disconnected', {
+                id
+            });
+        }
     }
 };
 
 const passEventToBeamer = (id, name, data) => {
-	console.log(id, '> beamer', name)
+    console.log(id, '> beamer', name)
+    for (var beamer of beamers) {
+        if (beamer) {
+            io.to(beamer).emit(name, Object.assign({
+                id
+            }, data));
+        } else {
+            console.log('beamer is not defined');
+        }
+    }
+};
 
-    if (beamer) {
-        io.to(beamer).emit(name, Object.assign({
-            id
-        }, data));
-    } else {
-		console.log('beamer is not defined');
-	}
+// id = from
+const passEventToOtherBeamers = (id, name, data) => {
+    console.log(id, '> beamer', name)
+    for (var beamer of _.without(beamers, {id:id})) {
+        if (beamer) {
+            io.to(beamer).emit(name, Object.assign({
+                id
+            }, data));
+        } else {
+            console.log('beamer is not defined');
+        }
+    }
 };
 
 const passEventToClients = (name, data) => {
@@ -66,20 +89,49 @@ const passEventToClient = (id, name, data) => {
 io.on('connection', (socket) => {
     console.log('connected', socket.id, socket.type);
 
+    if (!socket.points)
+    {
+        socket.points = 0;
+    }
+
     // CLIENT -------------------------------
     if (socket.type === 'client') {
         socket.on('client_upload', (data) => passEventToBeamer(socket.id, 'receive_upload', data));
         socket.on('disconnect', (data) => clientDisconnected(socket.id));
         socket.on('client_set_username', (data) => passEventToBeamer(socket.id, 'receive_username', data));
     } else if (socket.type === 'beamer') {
-        beamer = socket.id;
+        beamers.push(socket.id);
 
-		socket.on('client_add_points', (data) => passEventToClient(data.id, 'receive_points', data));
+		socket.on('client_add_points', (data) => {
+		    var destination = io.sockets.connected[data.id];
+            destination.points += data.points;
+            data.points = destination.points;
+
+            passEventToClient(data.id, 'receive_points', data)
+            passEventToBeamer(socket.id, 'receive_points', data)
+        });
 		socket.on('clear_code', (data) => passEventToClients('clear_code', data));
 		socket.on('enable_lock', (data) => passEventToClients('lock_enabled', data));
 		socket.on('disable_lock', (data) => passEventToClients('lock_disabled', data));
-		socket.on('set_quest', (data) => passEventToClients('receive_quest', data));
-        socket.on('full_reset', (data) => passEventToClients('full_reset', data));
+		socket.on('set_quest', (data) => {
+            passEventToClients('receive_quest', data);
+            passEventToBeamer(socket.id, 'receive_quest', data);
+		});
+        socket.on('full_reset', (data) => {
+            passEventToClients('full_reset', data);
+
+            const ids = _.chain(io.sockets.connected).values().filter({
+                type: 'client'
+            }).map('id').value();
+            for (var index = 0, length = ids.length; index < length; index++) {
+                const id = ids[index];
+
+                io.sockets.connected[id].points = 0;
+            }
+
+            passEventToBeamer(socket.id, 'full_reset', data);
+
+        });
     }
 });
 
@@ -117,4 +169,4 @@ io.use(function(socket, next) {
 
 
 // RUN -------------------------------
-server.listen(8080, 'localhost');
+server.listen(8080, '192.168.178.55');

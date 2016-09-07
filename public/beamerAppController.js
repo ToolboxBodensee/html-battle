@@ -66,6 +66,24 @@ app.controller('AppController', function (
         $scope.quest = data.quest;
     });
 
+    $scope.$on('socket:full_reset', function (event, data) {
+        $log.log('BattleSocket: full_reset', event, data);
+
+
+        for (var key in $scope.sourceCodes)
+        {
+            var user = $scope.sourceCodes[key];
+            user.points = 0;
+        }
+
+    });
+
+    $scope.$on('socket:client_disconnected', function (event, data) {
+        $log.log('BattleSocket: client_disconnected', event, data);
+
+        delete $scope.sourceCodes[data.id];
+    });
+
     $scope.$on('socket:receive_username', function (event, data) {
         $log.log('BattleSocket: receive_username', event, data);
 		var user = $scope.sourceCodes[data.id];
@@ -83,7 +101,7 @@ app.controller('AppController', function (
 
 		if (!$scope.sourceCodes[data.id]) {
 			// TODO: create a 'createInitialSource' method
-			$scope.sourceCodes[data.id] = {};
+			$scope.sourceCodes[data.id] = { points: 0 };
 		}
 		if (data.name) {
 			$scope.sourceCodes[data.id].name = data.name;
@@ -104,6 +122,12 @@ app.controller('AppController', function (
         $scope.columnClass    = '-' + Math.ceil(12 / rowsAndColumns);
 
         $scope.fixHeight();
+    });
+
+    $scope.$on('socket:receive_points', function (event, data) {
+        $log.log('BattleSocket: receive_points', event, data);
+
+        $scope.sourceCodes[data.id].points = parseFloat(data.points);
     });
 
     /**
@@ -187,10 +211,10 @@ app.controller('AppController', function (
         if (points)
         {
 			points = Math.max(0, parseFloat(points));
-			if (!$scope.sourceCodes[clientId].points) {
-				$scope.sourceCodes[clientId].points = 0;
-			}
-			$scope.sourceCodes[clientId].points += points;
+			// if (!$scope.sourceCodes[clientId].points) {
+			// 	$scope.sourceCodes[clientId].points = 0;
+			// }
+			// $scope.sourceCodes[clientId].points += points;
             BattleSocket.addPoints(clientId, points);
         }
     };
