@@ -15,6 +15,14 @@ app.use(express.static(__dirname + '/public'));
 var beamers = [];
 var admin = null;
 
+var program = require('commander');
+program
+    .option('-p, --port <n>', "Server's port", parseInt)
+    .option('-h, --hostname <s>', "Server's hostname")
+    .parse(process.argv);
+var port = program.port ? program.port : 8080;
+var hostname = program.hostname ? program.hostname : '192.168.178.55';
+
 // HELPR ---
 
 const clientUpdatedSourceCode = (id, sourceCode) => {
@@ -169,4 +177,4 @@ io.use(function(socket, next) {
 
 
 // RUN -------------------------------
-server.listen(8080, '192.168.178.55');
+server.listen(port, hostname);
