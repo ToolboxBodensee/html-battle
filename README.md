@@ -1,6 +1,6 @@
 # html battle
 
-We wrote this tool for a event at [Toolbox Bodensee](http://toolbox-bodensee.de/)
+We wrote this tool for an event at [Toolbox Bodensee](http://toolbox-bodensee.de/).
 
 ## Features
 
