@@ -2,6 +2,11 @@
 
 We wrote this tool for an event at [Toolbox Bodensee](http://toolbox-bodensee.de/).
 
+# Table of contents
+1. [Features] (#features)
+2. [Authors] (#authors)
+3. [Getting Started] (#getting-started)
+
 ## Features
 
 * Usernames
@@ -14,7 +19,7 @@ We wrote this tool for an event at [Toolbox Bodensee](http://toolbox-bodensee.de
 * [Thomas Kekeisen](https://github.com/blaues0cke)
 * [Michael Malura](https://github.com/maluramichael)    
 
-##Getting Started    
+## Getting Started    
  
  * Fork this repository
  * Clone it
