@@ -1,5 +1,7 @@
 # html battle
 
+**Entwicklung nur auf [GitLab](https://gitlab.com/ToolboxBodensee/events/html-battle). Auf GitHub befindet sich lediglich ein Mirror**
+
 We wrote this tool for an event at [Toolbox Bodensee](http://toolbox-bodensee.de/).
 
 ## Features
