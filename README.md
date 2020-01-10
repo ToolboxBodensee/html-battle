@@ -5,9 +5,9 @@
 We wrote this tool for an event at [Toolbox Bodensee](http://toolbox-bodensee.de/).
 
 # Table of contents
-1. [Features] (#features)
-2. [Authors] (#authors)
-3. [Getting Started] (#getting-started)
+1. [Features](#features)
+2. [Authors](#authors)
+3. [Getting Started](#getting-started)
 
 ## Features
 
